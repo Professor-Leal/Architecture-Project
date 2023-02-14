@@ -3,13 +3,10 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-
-    // Necessário para Moshi:
-    id 'org.jetbrains.kotlin.kapt'
 }
 
 android {
-    namespace 'com.rafaelleal.android.data_remote'
+    namespace 'com.rafaelleal.android.presentation_address'
     compileSdk defaultCompileSdkVersion
 
     defaultConfig {
@@ -41,15 +38,6 @@ android {
 
 dependencies {
 
-    implementation coroutines.coroutinesAndroid
-    implementation network.okHttp
-    implementation network.retrofit
-    implementation network.retrofitMoshi
-    implementation network.moshi
-    implementation network.moshiKotlin
-    kapt network.moshiKotlinCodegen
-
-
     // Possui dependência sobre o módulo domain:
     implementation(project(path: ":domain"))
     implementation(project(path: ":data-repository"))
@@ -74,5 +62,7 @@ dependencies {
 
     androidTestImplementation androidTest.junit
     androidTestImplementation androidTest.espressoCore
+
+
 
 }

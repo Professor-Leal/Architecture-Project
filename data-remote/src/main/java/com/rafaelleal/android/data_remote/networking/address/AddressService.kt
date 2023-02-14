@@ -1,6 +1,6 @@
 package com.rafaelleal.android.data_remote.networking.address
 
-import com.rafaelleal.android.domain.entity.Address
+
 import retrofit2.http.GET
 import retrofit2.http.Path
 

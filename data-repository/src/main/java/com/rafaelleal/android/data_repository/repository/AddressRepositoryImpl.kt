@@ -1,5 +1,6 @@
 package com.rafaelleal.android.data_repository.repository
 
+import android.util.Log
 import com.rafaelleal.android.data_repository.data_source.local.LocalAddressDataSource
 import com.rafaelleal.android.data_repository.data_source.remote.RemoteAddressDataSource
 import com.rafaelleal.android.domain.entity.Address
@@ -13,11 +14,12 @@ class AddressRepositoryImpl @Inject constructor(
 ) : AddressRepository {
 
     override fun getAddressByCep(cep: String): Flow<Address> = flow{
-        val address = localAddressDataSource.getAddress(cep).single()
-        if(address == null){
+
+        val address = localAddressDataSource.getAddress(formatCep(cep)).single()
+        if(address.id == 0L ){
             emit(
-                remoteAddressDataSource.getAddress(cep).onEach {
-                    localAddressDataSource.saveAddress(it)
+                remoteAddressDataSource.getAddress(cep).onEach { _address->
+                    localAddressDataSource.saveAddress(_address)
                 }.single()
             )
         } else {
@@ -29,6 +31,10 @@ class AddressRepositoryImpl @Inject constructor(
     }
     override suspend fun saveAddress(address: Address) {
         localAddressDataSource.saveAddress(address)
+    }
+
+    fun formatCep(cep: String ): String {
+        return "${cep.substring(0,5)}-${cep.substring(5,8)}"
     }
 }
 

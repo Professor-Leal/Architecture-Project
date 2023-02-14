@@ -1,5 +1,6 @@
 package com.rafaelleal.android.data_remote.source
 
+import android.util.Log
 import com.rafaelleal.android.data_remote.networking.address.AddressApiModel
 import com.rafaelleal.android.data_remote.networking.address.AddressService
 import com.rafaelleal.android.data_repository.data_source.remote.RemoteAddressDataSource
@@ -14,6 +15,8 @@ import javax.inject.Inject
 class RemoteAddressDataSourceImpl @Inject constructor(
     private val addressService: AddressService
 ) : RemoteAddressDataSource {
+
+    val TAG = "Main"
     override fun getAddress(cep: String): Flow<Address> = flow {
         emit(addressService.getAddress(cep))
     }.map { _address ->
@@ -24,12 +27,12 @@ class RemoteAddressDataSourceImpl @Inject constructor(
 
     fun convert(addressApiModel: AddressApiModel) = Address(
         id = 0L,
-        cep = addressApiModel.cep,
-        rua = addressApiModel.logradouro,
-        complemento = addressApiModel.complemento,
-        bairro = addressApiModel.bairro,
-        cidade = addressApiModel.localidade,
-        estado = addressApiModel.uf
+        cep = addressApiModel.cep ?: "Não encontrado" ,
+        rua = addressApiModel.logradouro ?: "Não encontrado",
+        complemento = addressApiModel.complemento ?: "Não encontrado",
+        bairro = addressApiModel.bairro ?: "Não encontrado",
+        cidade = addressApiModel.localidade ?: "Não encontrado",
+        estado = addressApiModel.uf ?: "Não encontrado"
     )
 }
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cep_address">CEP: %s</string>
+    <string name="rua_address">Rua: %s</string>
+    <string name="complemento_address">Complemento: %s</string>
+    <string name="bairro_address">Bairro: %s</string>
+    <string name="cidade_address">Cidade: %s</string>
+    <string name="estado_address">Estado: %s</string>
+</resources>

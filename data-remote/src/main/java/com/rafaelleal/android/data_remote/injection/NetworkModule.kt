@@ -21,23 +21,19 @@ class NetworkModule {
     @Provides
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient
         .Builder()
-        .readTimeout(15, TimeUnit.SECONDS)
-        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .connectTimeout(60, TimeUnit.SECONDS)
         .build()
 
     @Provides
-    fun provideMoshi(): Moshi = Moshi.Builder().add(
-        KotlinJsonAdapterFactory()
-    ).build()
-
-    @Provides
     fun provideRetrofit(
-        okHttpClient: OkHttpClient,
-        moshi: Moshi
+        okHttpClient: OkHttpClient
+        //,
+        //moshi: Moshi
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(okHttpClient)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addConverterFactory(MoshiConverterFactory.create())
         .build()
 
     @Provides

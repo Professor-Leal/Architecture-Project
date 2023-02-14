@@ -11,11 +11,11 @@ buildscript {
         versions = [
                 hilt : "2.42",
                 coreKtx : "1.7.0",
-                appCompat : "1.4.1",
+                appCompat : "1.6.1",
                 compose : "1.3.0",
                 lifecycleRuntimeKtx: "2.4.0",
                 activityCompose : "1.4.0",
-                material : "1.5.0",
+                material : "1.8.0",
                 coroutines : "1.5.2",
                 junit : "4.13.2",
                 mockito : "4.0.0",
@@ -24,9 +24,18 @@ buildscript {
                 constraintlayout: "2.1.4",
                 room : "2.4.1",
                 roomCommon: "2.4.3",
+
                 okHttp : "4.9.0",
                 retrofit : "2.9.0",
                 moshi : "1.13.0",
+                moshiKotlinCodegen: "1.13.0",
+
+                viewModel : "2.4.0",
+                navigationCompose : "2.4.0-rc01",
+                hiltNavigationCompose: "1.0.0-rc01",
+
+                activity: "1.6.0",
+                fragment: "1.5.5"
 
         ]
 
@@ -38,7 +47,16 @@ buildscript {
                 composeUiToolingPreview: "androidx.compose.ui:ui-tooling-preview:${versions.compose}",
                 lifecycleRuntimeKtx : "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycleRuntimeKtx}",
                 composeActivity : "androidx.activity:activity-compose:${versions.activityCompose}",
-                constraintlayout: "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
+                constraintlayout: "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
+
+                activity: "androidx.activity:activity-ktx:${versions.activity}",
+                fragment: "androidx.fragment:fragment-ktx:${versions.fragment}",
+
+                viewModelKtx : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.viewModel}",
+                viewModelCompose : "androidx.lifecycle:lifecycle-viewmodel-compose:${versions.viewModel}",
+                navigationCompose : "androidx.navigation:navigation-compose:${versions.navigationCompose}",
+                hiltNavigationCompose : "androidx.hilt:hilt-navigation-compose:${versions.hiltNavigationCompose}"
+
         ]
 
         material = [
@@ -74,14 +92,12 @@ buildscript {
                 retrofit : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
                 retrofitMoshi: "com.squareup.retrofit2:converter-moshi:${versions.retrofit}",
                 moshi : "com.squareup.moshi:moshi:${versions.moshi}",
-                moshiKotlin : "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
+                moshiKotlin : "com.squareup.moshi:moshi-kotlin:${versions.moshi}",
+                moshiKotlinCodegen:  "com.squareup.moshi:moshi-kotlin-codegen:${versions.moshiKotlinCodegen}"
         ]
 
     }
 }
-
-
-
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
@@ -89,6 +105,8 @@ plugins {
     id 'com.android.library' version '7.3.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
     id 'com.google.dagger.hilt.android' version '2.42' apply false
+    // Necessário para Moshi:
+    id 'org.jetbrains.kotlin.kapt' version '1.7.10' apply false
 }
 
 task clean(type: Delete) {

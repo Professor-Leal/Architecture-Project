@@ -44,12 +44,20 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
 
-    // Possui dependência sobre o módulo domain:
+    // Possui dependência sobre os módulos:
     implementation(project(path: ":domain"))
+    implementation(project(path: ":data-local"))
+    implementation(project(path: ":data-remote"))
+    implementation(project(path: ":data-repository"))
+    implementation(project(path: ":presentation-address"))
 
     // Hilt
     implementation di.hiltAndroid
@@ -64,6 +72,9 @@ dependencies {
     implementation androidx.lifecycleRuntimeKtx
     implementation androidx.composeActivity
     implementation androidx.constraintlayout
+
+    implementation androidx.activity
+    implementation androidx.fragment
 
     testImplementation test.junit
 
