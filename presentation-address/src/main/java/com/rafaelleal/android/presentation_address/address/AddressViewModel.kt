@@ -26,6 +26,9 @@ class AddressViewModel @Inject constructor(
     val addressFlow : StateFlow<UiState<AddressModel>> = _addressFlow
 
     fun fetchAddress(cep: String) {
+
+        _addressFlow.value = UiState.Loading
+
         Log.i(TAG, "AddressViewModel.fetchAddress" )
         viewModelScope.launch {
             useCase.execute(GetAddressUseCase.Request(cep))

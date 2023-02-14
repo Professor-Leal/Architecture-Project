@@ -13,6 +13,7 @@ import com.rafaelleal.android.presentation_address.address.AddressModel
 import com.rafaelleal.android.presentation_address.address.AddressViewModel
 import com.rafaelleal.android.presentation_address.address.UiState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -50,21 +51,23 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenStarted {
 
-            viewModel.addressFlow.collect { state ->
-                Log.i(TAG, "Collect: ${state}")
-                when (state) {
-                    is UiState.Waiting -> {
-                        setWaiting()
-                    }
-                    is UiState.Loading -> {
-                        showLoading(true)
-                    }
-                    is UiState.Error -> {
-                        //Error(state.errorMessage)
-                        displayError(state.errorMessage)
-                    }
-                    is UiState.Success -> {
-                        displayAddress(state.data)
+            launch {
+                viewModel.addressFlow.collect { state ->
+                    Log.i(TAG, "Collect: ${state}")
+                    when (state) {
+                        is UiState.Waiting -> {
+                            setWaiting()
+                        }
+                        is UiState.Loading -> {
+                            showLoading(true)
+                        }
+                        is UiState.Error -> {
+                            //Error(state.errorMessage)
+                            displayError(state.errorMessage)
+                        }
+                        is UiState.Success -> {
+                            displayAddress(state.data)
+                        }
                     }
                 }
             }
@@ -80,7 +83,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun displayAddress(addressModel: AddressModel) {
-        //showLoading(false)
+        showLoading(false)
         binding.tvAddessResult.setText(
             getTextFromAddressModel(addressModel)
         )
@@ -88,6 +91,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun displayError(msg: String) {
+        showLoading(false)
         binding.tvAddessResult.setText(msg)
         binding.tvAddessResult.setTextColor(Color.RED)
     }
